@@ -44,7 +44,7 @@ interface Product {
 	category: string;
 }
 
-function filterProducts<T extends Product, K extends keyof T>(
+function filterProducts<T extends Product, K extends keyof T>( // Mandatory Type: Product
 	products: T[],
 	criterion: K,
 	value: T[K]
@@ -64,7 +64,7 @@ const filteredProducts = filterProducts(products, "category", "Category 2");
 
 //: 4. Suppose you have an array of tuple, where each tuple represents a product and contain the product name, price, and quantity. Write a TypeScript function that calculate the total costs of all the products in the array, using a generic type for the tuple and a type alias for the array.
 //. Answer:
-/// 1.
+//' 1.
 type ProductTuple = [string, number, number];
 type ProductArray = ProductTuple[];
 function calculateTotalCost(products: ProductArray): number {
@@ -85,7 +85,7 @@ const totalCost = calculateTotalCost(products4);
 //
 //
 
-/// 2.
+//' 2.
 type ProductTuple_4b = [string, number, number]; // Tuple type alias
 function calculateTotalCost_4b<T extends ProductTuple_4b>(
 	products: T[]
@@ -107,7 +107,7 @@ const totalCost_4b = calculateTotalCost_4b(products_4b);
 //
 //
 
-/// 3.
+//' 3.
 // Define a generic type for the product tuple
 //  Use a constraint to ensure that K extends number
 // type Product_4<T> = [T, number, number];
@@ -144,3 +144,45 @@ let result_4c = totalCost_4c(products_4);
 // console.log("🚀 ~ result_4c:", result_4c);
 //
 //
+
+//: 5. Suppose you have an array of numbers in typescript, and you want to find all the even numbers in the array. How would you approach this problem and write code to solve it?
+//. Answer:
+function findEvenNumbers_5a<T extends number>(param: T[]): T[] {
+	const evenNumbers_5a: T[] = [];
+	param.forEach((element) => {
+		if (element % 2 === 0) {
+			evenNumbers_5a.push(element);
+		}
+	});
+	return evenNumbers_5a;
+}
+type arrayType_5a = Array<number>;
+const arr1_5a: arrayType_5a = [
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+];
+const result_5a = findEvenNumbers_5a(arr1_5a);
+// console.log("🚀 ~ result_5a:", result_5a);
+//
+//
+
+//: 6. Create an interface called Person that includes properties name(string), age(number) and email(string). Then create an array of Person objects and write a function that takes the array and a string email as parameters, and returns the Person object that matches the email or null if no match is found.
+//. Answer:
+// Create an interface called Person
+interface Person {
+	name: string;
+	age: number;
+	email: string;
+}
+// interface PersonArray extends Array<Person> {}
+const people: Person[] = [
+	{ name: "John", age: 45, email: "john@example.com" },
+	{ name: "Bon", age: 35, email: "bon@example.com" },
+	{ name: "Don", age: 40, email: "don@example.com" },
+	{ name: "Kon", age: 77, email: "kon@example.com" },
+	{ name: "Ton", age: 24, email: "ton@example.com" },
+];
+function findPersonByEmail(people: Person[], email: string): Person | null {
+	return people.find((person) => person.email === email) || null;
+}
+const getPerson = findPersonByEmail(people, "don@example.com");
+console.log("🚀 ~ getPerson:", getPerson);
