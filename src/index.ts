@@ -1,6 +1,6 @@
 //: 1. Convert the following JavaScript array into a TypeScript tuple
 const userInfo = [101, "Ema", "John", true, , "2023"];
-//. Answer:
+//? Answer:
 // const userInfoTuple = [...userInfo] as const;
 const userInfoTuple2: [number, string, string, boolean, undefined, string] = [
 	101,
@@ -15,7 +15,7 @@ const userInfoTuple2: [number, string, string, boolean, undefined, string] = [
 //; For example, if the first array is [1, 2, 3, 4, 5] and the second array is [2, 4, 6, 8], the function should return a new array with the elements 2 and 4 because the are present in both arrays.
 
 //; The function should handle arrays of any length and should return the resulting array in the same order as they appear in the first array.
-//. Answer:
+//? Answer:
 
 function commonNumbers<T>(arr1: T[], arr2: T[]): T[] {
 	const commonNumbers: T[] = [];
@@ -36,7 +36,7 @@ const result = commonNumbers(arr1, arr2);
 
 //: 3. You have  an interface for Product, containing the product's id, name, price, and category. You want to filter an array of products based on specific criterion and value.
 //; Write a TypeScript generic function thats takes this array, a criterion, and returns a new array containing only the products that match the given criterion and value. Use a generic type parameter in the function signature to ensure type safety.
-//. Answer:
+//? Answer:
 interface Product {
 	id: number;
 	name: string;
@@ -63,8 +63,8 @@ const filteredProducts = filterProducts(products, "category", "Category 2");
 // console.log("🚀 ~ filteredProducts:", filteredProducts);
 
 //: 4. Suppose you have an array of tuple, where each tuple represents a product and contain the product name, price, and quantity. Write a TypeScript function that calculate the total costs of all the products in the array, using a generic type for the tuple and a type alias for the array.
-//. Answer:
-//' 1.
+//? Answer:
+//> 1.
 type ProductTuple = [string, number, number];
 type ProductArray = ProductTuple[];
 function calculateTotalCost(products: ProductArray): number {
@@ -85,7 +85,7 @@ const totalCost = calculateTotalCost(products4);
 //
 //
 
-//' 2.
+//> 2.
 type ProductTuple_4b = [string, number, number]; // Tuple type alias
 function calculateTotalCost_4b<T extends ProductTuple_4b>(
 	products: T[]
@@ -107,7 +107,7 @@ const totalCost_4b = calculateTotalCost_4b(products_4b);
 //
 //
 
-//' 3.
+//> 3.
 // Define a generic type for the product tuple
 //  Use a constraint to ensure that K extends number
 // type Product_4<T> = [T, number, number];
@@ -146,7 +146,7 @@ let result_4c = totalCost_4c(products_4);
 //
 
 //: 5. Suppose you have an array of numbers in typescript, and you want to find all the even numbers in the array. How would you approach this problem and write code to solve it?
-//. Answer:
+//? Answer:
 function findEvenNumbers_5a<T extends number>(param: T[]): T[] {
 	const evenNumbers_5a: T[] = [];
 	param.forEach((element) => {
@@ -166,7 +166,7 @@ const result_5a = findEvenNumbers_5a(arr1_5a);
 //
 
 //: 6. Create an interface called Person that includes properties name(string), age(number) and email(string). Then create an array of Person objects and write a function that takes the array and a string email as parameters, and returns the Person object that matches the email or null if no match is found.
-//. Answer:
+//? Answer:
 // Create an interface called Person
 interface Person {
 	name: string;
@@ -185,4 +185,56 @@ function findPersonByEmail(people: Person[], email: string): Person | null {
 	return people.find((person) => person.email === email) || null;
 }
 const getPerson = findPersonByEmail(people, "don@example.com");
-console.log("🚀 ~ getPerson:", getPerson);
+// console.log("🚀 ~ getPerson:", getPerson);
+//
+//
+
+//: 7. Create a TypeScript program that declare an array of numbers. Use the spread operator to pass the elements of the array as arguments toa a function that finds the minimum and maximum values of the array. Use Destructuring to assign the minimum and maximum values to separate variables, and log them to the console.
+//? Answer:
+//> 1.
+const numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+function findMinAndMax(...number: number[]): [number, number] {
+	const [minimumNumber, maximumNumber] = [
+		Math.min(...numbers),
+		Math.max(...numbers),
+	];
+	// console.log("🚀 ~ minimumNumber:", minimumNumber);
+	// console.log("🚀 ~ maximumNumber:", maximumNumber);
+	return [minimumNumber, maximumNumber];
+}
+const findNumbers = findMinAndMax(...numbers);
+
+//> 2. by ChatGPT 4 Precise
+function findMinMax_7b(...nums: number[]): [number, number] {
+	let min = nums[0];
+	let max = nums[0];
+	for (const num of nums) {
+		if (num < min) min = num;
+		if (num > max) max = num;
+	}
+	return [min, max];
+}
+const numbers_7b = [3, 1, 4, 1, 5, 9];
+const [minValue, maxValue] = findMinMax_7b(...numbers_7b);
+// console.log(`Minimum value: ${minValue}, Maximum value; ${maxValue}`);
+
+//: 8. Create a typeScript that declare a function that takes a string parameter with literal type of 'red', 'green', 'blue', and a optional boolean parameter. If the boolean parameter is true, log the string parameter in uppercase. If the boolean parameter is false or not provided, log the string parameter in lowercase.
+//? Answer:
+//> 1.
+function changeStringCase(param1: string, param2?: boolean): string {
+	return param2 ? param1.toUpperCase() : param1.toLowerCase();
+}
+const literalTypeElement = ["red"] as const;
+const result_8a = changeStringCase(...literalTypeElement);
+console.log("🚀 ~ result_8a:", result_8a);
+//
+//
+
+//> 2. by ChatGPT 4 Precise >>> shorter form
+type Color = "red" | "green" | "blue";
+function logColor(color: Color, uppercase?: boolean): void {
+	// console.log(uppercase ? color.toUpperCase() : color.toLowerCase());
+}
+logColor("red", false);
+logColor("green", true);
+logColor("blue");
